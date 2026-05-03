@@ -1,6 +1,6 @@
 .better-explorer-sticky-container .better-explorer-sticky-title {
 	position: sticky;
-	top: var(--better-explorer-sticky-top, 0px);
+	top: calc(var(--better-explorer-sticky-top, 0px) - 8px);
 	z-index: var(--better-explorer-sticky-z-index, 1000);
 	background: var(--background-primary);
 }
@@ -19,5 +19,7 @@
 
 .better-explorer-sticky-container .better-explorer-sticky-title:hover,
 .better-explorer-sticky-container .better-explorer-sticky-title.is-active {
-	background: var(--nav-item-background-hover, var(--background-modifier-hover));
+	background:
+		linear-gradient(var(--nav-item-background-hover, var(--background-modifier-hover)), var(--nav-item-background-hover, var(--background-modifier-hover))),
+		var(--background-primary);
 }
