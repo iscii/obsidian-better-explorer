@@ -4,6 +4,7 @@ import {
   shouldEnhanceFolder,
   getStickyHeaderStyle,
   normalizeDepth,
+  shouldIgnoreMutationTarget,
 } from "../src/stickyExplorerCore.mjs";
 
 describe("sticky explorer core", () => {
@@ -31,5 +32,11 @@ describe("sticky explorer core", () => {
       top: "48px",
       zIndex: "998",
     });
+  });
+
+  it("ignores mutation targets caused by the plugin's own class changes", () => {
+    assert.equal(shouldIgnoreMutationTarget(["better-explorer-sticky-title"]), true);
+    assert.equal(shouldIgnoreMutationTarget(["better-explorer-sticky-container"]), true);
+    assert.equal(shouldIgnoreMutationTarget(["nav-folder", "is-collapsed"]), false);
   });
 });

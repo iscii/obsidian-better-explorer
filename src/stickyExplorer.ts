@@ -3,6 +3,7 @@ import {
 	getStickyHeaderStyle,
 	normalizeDepth,
 	shouldEnhanceFolder,
+	shouldIgnoreMutationTarget,
 } from "./stickyExplorerCore.mjs";
 
 const FILE_EXPLORER_SELECTOR = '.workspace-leaf-content[data-type="file-explorer"] .nav-files-container';
@@ -15,18 +16,21 @@ interface StickyCoreModule {
 	getStickyHeaderStyle(options: { depth: number; headerHeight: number }): { top: string; zIndex: string };
 	normalizeDepth(rawDepth: number): number;
 	shouldEnhanceFolder(options: { isRoot: boolean; isCollapsed: boolean; hasTitle: boolean }): boolean;
+	shouldIgnoreMutationTarget(classNames: string[]): boolean;
 }
 
 const stickyCore = {
 	getStickyHeaderStyle,
 	normalizeDepth,
 	shouldEnhanceFolder,
+	shouldIgnoreMutationTarget,
 } as StickyCoreModule;
 
 export class StickyExplorerController {
 	private readonly app: App;
 	private readonly plugin: Plugin;
-	private observer: MutationObserver | null = null;
+	private readonly observers: MutationObserver[] = [];
+	private animationFrameId: number | null = null;
 
 	constructor(app: App, plugin: Plugin) {
 		this.app = app;
@@ -34,50 +38,92 @@ export class StickyExplorerController {
 	}
 
 	start(): void {
-		this.refresh();
+		this.scheduleRefresh();
 
 		this.plugin.registerEvent(
-			this.app.workspace.on("layout-change", () => this.refresh())
+			this.app.workspace.on("layout-change", () => this.scheduleRefresh())
 		);
 		this.plugin.registerEvent(
-			this.app.workspace.on("file-menu", () => window.setTimeout(() => this.refresh(), 0))
+			this.app.vault.on("rename", () => this.scheduleRefresh())
 		);
 		this.plugin.registerEvent(
-			this.app.vault.on("rename", () => this.refresh())
+			this.app.vault.on("create", () => this.scheduleRefresh())
 		);
 		this.plugin.registerEvent(
-			this.app.vault.on("create", () => this.refresh())
-		);
-		this.plugin.registerEvent(
-			this.app.vault.on("delete", () => this.refresh())
+			this.app.vault.on("delete", () => this.scheduleRefresh())
 		);
 		this.plugin.registerDomEvent(document, "click", (event: MouseEvent) => {
 			const target = event.target;
 			if (target instanceof Element && target.closest(".nav-folder-title")) {
-				window.setTimeout(() => this.refresh(), 0);
+				this.scheduleRefresh();
 			}
-		});
-
-		this.observer = new MutationObserver(() => this.refresh());
-		this.observer.observe(document.body, {
-			childList: true,
-			subtree: true,
-			attributes: true,
-			attributeFilter: ["class", "aria-expanded"],
 		});
 		this.plugin.register(() => this.stop());
 	}
 
 	stop(): void {
-		this.observer?.disconnect();
-		this.observer = null;
+		if (this.animationFrameId !== null) {
+			window.cancelAnimationFrame(this.animationFrameId);
+			this.animationFrameId = null;
+		}
+		this.disconnectObservers();
 		this.clearAll();
 	}
 
 	refresh(): void {
+		this.disconnectObservers();
+
 		const containers = Array.from(document.querySelectorAll<HTMLElement>(FILE_EXPLORER_SELECTOR));
 		for (const container of containers) {
 			this.enhanceContainer(container);
+			this.observeContainer(container);
+		}
+	}
+
+	private scheduleRefresh(): void {
+		if (this.animationFrameId !== null) {
+			return;
+		}
+
+		this.animationFrameId = window.requestAnimationFrame(() => {
+			this.animationFrameId = null;
+			this.refresh();
+		});
+	}
+
+	private observeContainer(container: HTMLElement): void {
+		const observer = new MutationObserver((mutations) => {
+			for (const mutation of mutations) {
+				if (mutation.type !== "attributes") {
+					this.scheduleRefresh();
+					return;
+				}
+
+				const target = mutation.target;
+				if (!(target instanceof Element)) {
+					this.scheduleRefresh();
+					return;
+				}
+
+				if (!stickyCore.shouldIgnoreMutationTarget(Array.from(target.classList))) {
+					this.scheduleRefresh();
+					return;
+				}
+			}
+		});
+
+		observer.observe(container, {
+			childList: true,
+			subtree: true,
+			attributes: true,
+			attributeFilter: ["class", "aria-expanded"],
+		});
+		this.observers.push(observer);
+	}
+
+	private disconnectObservers(): void {
+		while (this.observers.length > 0) {
+			this.observers.pop()?.disconnect();
 		}
 	}
 

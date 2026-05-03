@@ -18,3 +18,8 @@ export function getStickyHeaderStyle({ depth, headerHeight }) {
     zIndex: `${1000 - safeDepth}`,
   };
 }
+
+export function shouldIgnoreMutationTarget(classNames) {
+  return classNames.includes("better-explorer-sticky-title") ||
+    classNames.includes("better-explorer-sticky-container");
+}

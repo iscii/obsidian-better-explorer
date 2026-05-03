@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-better-explorer",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "VS Code-style nested sticky folder headers for Obsidian's file explorer.",
 	"main": "main.js",
 	"type": "module",
