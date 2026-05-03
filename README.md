@@ -94,41 +94,6 @@ npm run dev
 
 Release artifacts are `main.js`, `manifest.json`, and `styles.css`.
 
-## Adding README media
-
-Put README images in:
-
-```text
-docs/assets/
-```
-
-Suggested filenames:
-
-```text
-docs/assets/demo.gif
-docs/assets/screenshot.png
-```
-
-For your 4 MB demo GIF, this is the recommended path:
-
-```text
-docs/assets/demo.gif
-```
-
-Then reference it from the README like this:
-
-```md
-![Better Explorer demo](docs/assets/demo.gif)
-```
-
-Tips for the demo:
-
-- Keep it under about 5 MB if possible.
-- Crop tightly to the file explorer pane.
-- Show one clear scroll where parent folders stick and nested headers stack.
-- Avoid showing private vault names or note titles.
-- Prefer a screenshot if the GIF is noisy, hard to follow, or much larger than 5 MB.
-
 ## License
 
-0BSD
+MIT
