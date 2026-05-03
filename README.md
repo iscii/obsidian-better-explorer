@@ -6,16 +6,7 @@ When you scroll through a large vault, expanded parent folders stay pinned at th
 
 ## Demo
 
-<!-- Put your demo GIF at docs/assets/demo.gif, then keep this line. -->
 ![Better Explorer demo](docs/assets/demo.gif)
-
-If you prefer a static image, replace the line above with:
-
-```md
-![Better Explorer screenshot](docs/assets/screenshot.png)
-```
-
-Recommendation: use the GIF if it clearly shows the sticky behavior while scrolling. A 4 MB GIF is acceptable for a GitHub README, but keep it short and compressed. If the movement is subtle or the GIF feels distracting, use a screenshot instead and add a short caption explaining that parent folders stick while scrolling.
 
 ## Features
 
