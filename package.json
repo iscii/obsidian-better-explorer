@@ -16,7 +16,7 @@
 		"file-explorer",
 		"sticky-headers"
 	],
-	"license": "0-BSD",
+	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
 		"esbuild": "0.25.5",
