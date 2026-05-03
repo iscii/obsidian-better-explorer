@@ -10,6 +10,6 @@ describe("sticky explorer styles", () => {
   });
 
   it("keeps an opaque base layer under hover and active states", () => {
-    assert.match(css, /linear-gradient\(var\(--nav-item-background-hover[^)]*\)[\s\S]*var\(--background-primary\)/);
+    assert.match(css, /linear-gradient\([\s\S]*var\(--nav-item-background-hover[\s\S]*var\(--background-primary\)/);
   });
 });

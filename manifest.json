@@ -1,9 +1,9 @@
 {
-	"id": "obsidian-better-explorer",
+	"id": "better-explorer",
 	"name": "Better Explorer",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"minAppVersion": "1.5.0",
-	"description": "Improves Obsidian's file explorer with VS Code-style nested sticky folder headers.",
+	"description": "Adds VS Code-style nested sticky folder headers to the file explorer.",
 	"author": "iscii",
 	"isDesktopOnly": false
 }

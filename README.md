@@ -1,6 +1,6 @@
 # Better Explorer
 
-Better Explorer adds VS Code-style sticky folder headers to Obsidian's built-in file explorer.
+Better Explorer adds VS Code-style sticky folder headers to the built-in file explorer.
 
 When you scroll through a large vault, expanded parent folders stay pinned at the top of the file explorer and nested folders stack underneath them. The result is a small quality-of-life improvement: you can always see where you are without replacing Obsidian's native file explorer.
 
@@ -40,7 +40,7 @@ Once it is available there:
 2. Create this folder in your vault:
 
    ```text
-   <Your vault>/.obsidian/plugins/obsidian-better-explorer/
+   <Your vault>/.obsidian/plugins/better-explorer/
    ```
 
 3. Copy the three files into that folder.
@@ -59,7 +59,7 @@ npm run build
 Then copy `main.js`, `manifest.json`, and `styles.css` into:
 
 ```text
-<Your vault>/.obsidian/plugins/obsidian-better-explorer/
+<Your vault>/.obsidian/plugins/better-explorer/
 ```
 
 Reload Obsidian and enable the plugin.
@@ -94,41 +94,6 @@ npm run dev
 
 Release artifacts are `main.js`, `manifest.json`, and `styles.css`.
 
-## Adding README media
-
-Put README images in:
-
-```text
-docs/assets/
-```
-
-Suggested filenames:
-
-```text
-docs/assets/demo.gif
-docs/assets/screenshot.png
-```
-
-For your 4 MB demo GIF, this is the recommended path:
-
-```text
-docs/assets/demo.gif
-```
-
-Then reference it from the README like this:
-
-```md
-![Better Explorer demo](docs/assets/demo.gif)
-```
-
-Tips for the demo:
-
-- Keep it under about 5 MB if possible.
-- Crop tightly to the file explorer pane.
-- Show one clear scroll where parent folders stick and nested headers stack.
-- Avoid showing private vault names or note titles.
-- Prefer a screenshot if the GIF is noisy, hard to follow, or much larger than 5 MB.
-
 ## License
 
-0BSD
+MIT
