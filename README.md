@@ -1,6 +1,6 @@
 # Better Explorer
 
-Better Explorer adds VS Code-style sticky folder headers to Obsidian's built-in file explorer.
+Better Explorer adds VS Code-style sticky folder headers to the built-in file explorer.
 
 When you scroll through a large vault, expanded parent folders stay pinned at the top of the file explorer and nested folders stack underneath them. The result is a small quality-of-life improvement: you can always see where you are without replacing Obsidian's native file explorer.
 
@@ -40,7 +40,7 @@ Once it is available there:
 2. Create this folder in your vault:
 
    ```text
-   <Your vault>/.obsidian/plugins/obsidian-better-explorer/
+   <Your vault>/.obsidian/plugins/better-explorer/
    ```
 
 3. Copy the three files into that folder.
@@ -59,7 +59,7 @@ npm run build
 Then copy `main.js`, `manifest.json`, and `styles.css` into:
 
 ```text
-<Your vault>/.obsidian/plugins/obsidian-better-explorer/
+<Your vault>/.obsidian/plugins/better-explorer/
 ```
 
 Reload Obsidian and enable the plugin.
